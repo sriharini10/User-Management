@@ -9,17 +9,15 @@ export default function Dashboard({ username, setUsername }) {
   const navigate = useNavigate();
   const [section, setSection] = useState('home');
 
-  // ✅ Safely get and display the username
+  // Get the email from props or localStorage
   const fullEmail = username || localStorage.getItem("username") || "";
   const displayName = fullEmail.includes("@") ? fullEmail.split("@")[0] : "User";
 
-  // ✅ Logout function
   const logout = () => {
-    const confirmLogout = window.confirm('Are you sure you want to logout?');
-    if (confirmLogout) {
+    if (window.confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('username');
-      setUsername(null);
-      navigate('/');
+      setUsername(null); // Clear from state
+      navigate('/'); // Redirect to login page
     }
   };
 

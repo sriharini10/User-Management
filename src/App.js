@@ -1,16 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Dashboard from './Dashboard';
 
 function App() {
+  const [username, setUsername] = useState(localStorage.getItem('username'));
+
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/"
+          element={!username ? <Login setUsername={setUsername} /> : <Navigate to="/dashboard" />}
+        />
+        <Route
+          path="/dashboard"
+          element={<Dashboard username={username} setUsername={setUsername} />}
+        />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
